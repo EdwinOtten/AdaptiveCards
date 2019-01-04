@@ -11,6 +11,11 @@ namespace AdaptiveSharedNamespace
     {
     public:
         TimeInput();
+        TimeInput(const TimeInput&) = default;
+        TimeInput(TimeInput&&) = default;
+        TimeInput& operator=(const TimeInput&) = default;
+        TimeInput& operator=(TimeInput&&) = default;
+        ~TimeInput() = default;
 
         Json::Value SerializeToJsonValue() const override;
 
@@ -43,7 +48,7 @@ namespace AdaptiveSharedNamespace
         TimeInputParser(TimeInputParser&&) = default;
         TimeInputParser& operator=(const TimeInputParser&) = default;
         TimeInputParser& operator=(TimeInputParser&&) = default;
-        virtual ~TimeInputParser() = default;
+        ~TimeInputParser() = default;
 
         std::shared_ptr<BaseCardElement> Deserialize(ParseContext& context, const Json::Value& root) override;
         std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& jsonString) override;

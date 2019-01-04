@@ -1,6 +1,6 @@
-
 #include "pch.h"
 #include "BaseActionElement.h"
+#include "BaseElement.h"
 #include "ParseUtil.h"
 
 using namespace AdaptiveSharedNamespace;
@@ -75,7 +75,12 @@ std::string BaseActionElement::Serialize() const
 Json::Value BaseActionElement::SerializeToJsonValue() const
 {
     Json::Value root = GetAdditionalProperties();
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)] = ActionTypeToString(m_type);
+
+    if (!m_iconUrl.empty())
+    {
+        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IconUrl)] = m_iconUrl;
+    }
+
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id)] = m_id;
 
     if (!m_title.empty())
@@ -88,10 +93,9 @@ Json::Value BaseActionElement::SerializeToJsonValue() const
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Sentiment)] = SentimentToString(m_sentiment);
     }
 
-    if (!m_iconUrl.empty())
-    {
-        root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IconUrl)] = m_iconUrl;
-    }
+    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)] = ActionTypeToString(m_type);
+
+    SerializeFallbackAndRequires(root);
 
     return root;
 }
@@ -108,11 +112,13 @@ void BaseActionElement::SetAdditionalProperties(Json::Value const& value)
 
 void BaseActionElement::PopulateKnownPropertiesSet()
 {
-    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type),
-                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title),
-                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id),
+    m_knownProperties.insert({AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Fallback),
                               AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IconUrl),
-                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Sentiment)});
+                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id),
+                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Requires),
+                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Sentiment),
+                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Title),
+                              AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)});
 }
 
 void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInformation>& resourceInfo)
@@ -124,4 +130,9 @@ void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInforma
         imageResourceInfo.mimeType = "image";
         resourceInfo.push_back(imageResourceInfo);
     }
+}
+
+void BaseActionElement::ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseActionElement>& baseElement)
+{
+    baseElement = ParseUtil::GetActionFromJsonValue(context, json);
 }

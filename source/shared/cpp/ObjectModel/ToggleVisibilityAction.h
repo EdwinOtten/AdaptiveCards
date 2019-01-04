@@ -34,7 +34,7 @@ namespace AdaptiveSharedNamespace
         ToggleVisibilityActionParser(ToggleVisibilityActionParser&&) = default;
         ToggleVisibilityActionParser& operator=(const ToggleVisibilityActionParser&) = default;
         ToggleVisibilityActionParser& operator=(ToggleVisibilityActionParser&&) = default;
-        virtual ~ToggleVisibilityActionParser() = default;
+        ~ToggleVisibilityActionParser() = default;
 
         std::shared_ptr<BaseActionElement> Deserialize(ParseContext& context, const Json::Value& value) override;
 

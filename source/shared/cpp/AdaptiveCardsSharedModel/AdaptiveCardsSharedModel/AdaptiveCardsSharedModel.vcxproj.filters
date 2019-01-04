@@ -314,5 +314,8 @@
     <ClInclude Include="..\..\ObjectModel\ToggleVisibilityTarget.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\ObjectModel\BaseElement.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

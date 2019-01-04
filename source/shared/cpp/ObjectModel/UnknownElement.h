@@ -13,6 +13,11 @@ namespace AdaptiveSharedNamespace
     {
     public:
         UnknownElement();
+        UnknownElement(const UnknownElement&) = default;
+        UnknownElement(UnknownElement&&) = default;
+        UnknownElement& operator=(const UnknownElement&) = default;
+        UnknownElement& operator=(UnknownElement&&) = default;
+        ~UnknownElement() = default;
     };
 
     class UnknownElementParser : public BaseCardElementParser

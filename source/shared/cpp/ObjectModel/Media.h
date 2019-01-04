@@ -14,6 +14,11 @@ namespace AdaptiveSharedNamespace
 
     public:
         Media();
+        Media(const Media&) = default;
+        Media(Media&&) = default;
+        Media& operator=(const Media&) = default;
+        Media& operator=(Media&&) = default;
+        ~Media() = default;
 
         Json::Value SerializeToJsonValue() const override;
 

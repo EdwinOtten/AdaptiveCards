@@ -48,7 +48,7 @@ namespace AdaptiveSharedNamespace
         }
     }
 
-    std::shared_ptr<ActionElementParser> ActionParserRegistration::GetParser(std::string const& elementType)
+    std::shared_ptr<ActionElementParser> ActionParserRegistration::GetParser(std::string const& elementType) const
     {
         auto parser = m_cardElementParsers.find(elementType);
         if (parser != ActionParserRegistration::m_cardElementParsers.end())

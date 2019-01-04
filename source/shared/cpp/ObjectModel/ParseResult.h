@@ -1,13 +1,13 @@
 #pragma once
 
 #include "pch.h"
-#include "AdaptiveCardParseWarning.h"
 
 namespace AdaptiveSharedNamespace
 {
     class AdaptiveCard;
+    class AdaptiveCardParseWarning;
 
-    class ParseResult
+    class ParseResult final
     {
     public:
         ParseResult(std::shared_ptr<AdaptiveCard> adaptiveCard, std::vector<std::shared_ptr<AdaptiveCardParseWarning>> warnings);

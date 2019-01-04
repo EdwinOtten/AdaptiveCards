@@ -72,7 +72,7 @@ std::string ToggleVisibilityTarget::Serialize()
 
 Json::Value ToggleVisibilityTarget::SerializeToJsonValue()
 {
-    auto visibilityToggle = GetIsVisible();
+    const auto visibilityToggle = GetIsVisible();
 
     if (visibilityToggle == IsVisibleToggle)
     {
