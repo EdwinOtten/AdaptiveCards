@@ -17,22 +17,16 @@ namespace AdaptiveSharedNamespace
         {
         }
 
-        BaseElement(const BaseElement&) = default;
-        BaseElement(BaseElement&&) = default;
-        BaseElement& operator=(const BaseElement&) = default;
-        BaseElement& operator=(BaseElement&&) = default;
-        virtual ~BaseElement() = default;
+        FallbackType GetFallbackType() const { return m_fallbackType; }
 
-        virtual FallbackType GetFallbackType() const { return m_fallbackType; }
-
-        virtual bool MeetsRequirements(const std::unordered_map<std::string, std::string>& /*hostProvides*/) const
+        bool MeetsRequirements(const std::unordered_map<std::string, std::string>& /*hostProvides*/) const
         {
             return true;
         }
 
-        virtual std::shared_ptr<T> GetFallbackContent() const { return m_fallbackContent; }
+        std::shared_ptr<T> GetFallbackContent() const { return m_fallbackContent; }
 
-        virtual void SerializeFallbackAndRequires(Json::Value& root) const
+        void SerializeFallbackAndRequires(Json::Value& root) const
         {
             SerializeFallback(root);
             SerializeRequires(root);
@@ -44,7 +38,8 @@ namespace AdaptiveSharedNamespace
             ParseRequires(context, json, baseElement);
         }
 
-        virtual unsigned int GetInternalId() const { return m_internalId; }
+
+        unsigned int GetInternalId() const { return m_internalId; }
 
     private:
         void SerializeFallback(Json::Value& root) const
