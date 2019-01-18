@@ -6,20 +6,12 @@
 using namespace AdaptiveSharedNamespace;
 
 BaseActionElement::BaseActionElement(ActionType type) :
-    m_type(type), m_typeString(ActionTypeToString(type)), m_sentiment(Sentiment::Default)
+    m_type(type), m_sentiment(Sentiment::Default)
 {
+    SetTypeString(ActionTypeToString(type));
     PopulateKnownPropertiesSet();
 }
 
-std::string BaseActionElement::GetElementTypeString() const
-{
-    return m_typeString;
-}
-
-void BaseActionElement::SetElementTypeString(const std::string& value)
-{
-    m_typeString = value;
-}
 
 std::string BaseActionElement::GetTitle() const
 {
@@ -29,16 +21,6 @@ std::string BaseActionElement::GetTitle() const
 void BaseActionElement::SetTitle(const std::string& value)
 {
     m_title = value;
-}
-
-std::string BaseActionElement::GetId() const
-{
-    return m_id;
-}
-
-void BaseActionElement::SetId(const std::string& value)
-{
-    m_id = value;
 }
 
 std::string BaseActionElement::GetIconUrl() const
@@ -66,22 +48,14 @@ const ActionType BaseActionElement::GetElementType() const
     return m_type;
 }
 
-std::string BaseActionElement::Serialize() const
-{
-    Json::FastWriter writer;
-    return writer.write(SerializeToJsonValue());
-}
-
 Json::Value BaseActionElement::SerializeToJsonValue() const
 {
-    Json::Value root = GetAdditionalProperties();
+    Json::Value root = BaseElement::SerializeToJsonValue();
 
     if (!m_iconUrl.empty())
     {
         root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::IconUrl)] = m_iconUrl;
     }
-
-    root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Id)] = m_id;
 
     if (!m_title.empty())
     {
@@ -95,19 +69,9 @@ Json::Value BaseActionElement::SerializeToJsonValue() const
 
     root[AdaptiveCardSchemaKeyToString(AdaptiveCardSchemaKey::Type)] = ActionTypeToString(m_type);
 
-    SerializeFallbackAndRequires(root);
+    //SerializeFallbackAndRequires(root);
 
     return root;
-}
-
-Json::Value BaseActionElement::GetAdditionalProperties() const
-{
-    return m_additionalProperties;
-}
-
-void BaseActionElement::SetAdditionalProperties(Json::Value const& value)
-{
-    m_additionalProperties = value;
 }
 
 void BaseActionElement::PopulateKnownPropertiesSet()
@@ -132,7 +96,7 @@ void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInforma
     }
 }
 
-void BaseActionElement::ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseActionElement>& baseElement)
+void BaseActionElement::ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
 {
     baseElement = ParseUtil::GetActionFromJsonValue(context, json);
 }

@@ -9,25 +9,20 @@
 
 namespace AdaptiveSharedNamespace
 {
-    class BaseActionElement : public BaseElement<BaseActionElement>
+    class BaseActionElement : public BaseElement
     {
     public:
         BaseActionElement(ActionType type);
 
+        BaseActionElement() = default;
         BaseActionElement(const BaseActionElement&) = default;
         BaseActionElement(BaseActionElement&&) = default;
         BaseActionElement& operator=(const BaseActionElement&) = default;
         BaseActionElement& operator=(BaseActionElement&&) = default;
         ~BaseActionElement() = default;
 
-        virtual std::string GetElementTypeString() const;
-        virtual void SetElementTypeString(const std::string& value);
-
         virtual std::string GetTitle() const;
         virtual void SetTitle(const std::string& value);
-
-        virtual std::string GetId() const;
-        virtual void SetId(const std::string& value);
 
         virtual std::string GetIconUrl() const;
         virtual void SetIconUrl(const std::string& value);
@@ -37,17 +32,13 @@ namespace AdaptiveSharedNamespace
 
         virtual const ActionType GetElementType() const;
 
-        std::string Serialize() const;
-        virtual Json::Value SerializeToJsonValue() const;
+        void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris) override;
+        Json::Value BaseActionElement::SerializeToJsonValue() const override;
 
-        template<typename T> static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
+        template <typename T>
+        static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
 
-        Json::Value GetAdditionalProperties() const;
-        void SetAdditionalProperties(Json::Value const& additionalProperties);
-
-        virtual void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris);
-
-        static void ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseActionElement>& element);
+        static void ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
 
     protected:
         std::unordered_set<std::string> m_knownProperties;
@@ -55,30 +46,26 @@ namespace AdaptiveSharedNamespace
     private:
         virtual void PopulateKnownPropertiesSet();
 
-        std::string m_typeString;
         std::string m_title;
-        std::string m_id;
         std::string m_iconUrl;
-        Json::Value m_additionalProperties;
         ActionType m_type;
         Sentiment m_sentiment;
     };
 
-    template<typename T> std::shared_ptr<T> BaseActionElement::Deserialize(ParseContext& context, const Json::Value& json)
+    template <typename T>
+    std::shared_ptr<T> BaseActionElement::Deserialize(ParseContext& context, const Json::Value& json)
     {
         std::shared_ptr<T> cardElement = std::make_shared<T>();
-        std::shared_ptr<BaseActionElement> baseActionElement = cardElement;
+        std::shared_ptr<BaseActionElement> baseActionElement = std::static_pointer_cast<BaseActionElement>(cardElement);
 
         ParseUtil::ThrowIfNotJsonObject(json);
 
+        baseActionElement->DeserializeBase<BaseActionElement>(context, json);
+
         baseActionElement->SetIconUrl(ParseUtil::GetString(json, AdaptiveCardSchemaKey::IconUrl));
-        baseActionElement->SetId(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Id));
-        // TODO: Support requires
         baseActionElement->SetSentiment(
             ParseUtil::GetEnumValue<Sentiment>(json, AdaptiveCardSchemaKey::Sentiment, Sentiment::Default, SentimentFromString));
         baseActionElement->SetTitle(ParseUtil::GetString(json, AdaptiveCardSchemaKey::Title));
-
-        ParseFallbackAndRequires(context, json, *baseActionElement);
 
         // Walk all properties and put any unknown ones in the additional properties json
         for (auto it = json.begin(); it != json.end(); ++it)

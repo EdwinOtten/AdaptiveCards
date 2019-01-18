@@ -318,9 +318,9 @@ namespace AdaptiveSharedNamespace
 
         for (const auto& curJsonValue : elementArray)
         {
-            std::shared_ptr<BaseCardElement> curElement;
-            BaseCardElement::ParseJsonObject(context, curJsonValue, curElement);
-            elements.push_back(curElement);
+            std::shared_ptr<BaseElement> curElement;
+            BaseElement::ParseJsonObject<BaseCardElement>(context, curJsonValue, curElement);
+            elements.push_back(std::static_pointer_cast<BaseCardElement>(curElement));
         }
 
         return std::move(elements);
