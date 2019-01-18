@@ -2,6 +2,7 @@
 #include "Container.h"
 #include "TextBlock.h"
 #include "ColumnSet.h"
+#include "ParseUtil.h"
 #include "Util.h"
 
 using namespace AdaptiveSharedNamespace;

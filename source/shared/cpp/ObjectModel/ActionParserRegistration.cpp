@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ActionParserRegistration.h"
+#include "AdaptiveCardParseException.h"
 #include "OpenUrlAction.h"
 #include "ShowCardAction.h"
 #include "SubmitAction.h"

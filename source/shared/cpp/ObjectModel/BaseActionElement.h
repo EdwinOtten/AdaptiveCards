@@ -3,7 +3,6 @@
 #include "pch.h"
 #include "Enums.h"
 #include "json/json.h"
-#include "ParseUtil.h"
 #include "RemoteResourceInformation.h"
 #include "BaseElement.h"
 
@@ -33,12 +32,12 @@ namespace AdaptiveSharedNamespace
         virtual const ActionType GetElementType() const;
 
         void GetResourceInformation(std::vector<RemoteResourceInformation>& resourceUris) override;
-        Json::Value BaseActionElement::SerializeToJsonValue() const override;
+        Json::Value SerializeToJsonValue() const override;
 
         template <typename T>
         static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
 
-        static void ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
+        static void ParseJsonObject(AdaptiveSharedNamespace::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
 
     protected:
         std::unordered_set<std::string> m_knownProperties;

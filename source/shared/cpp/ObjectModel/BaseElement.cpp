@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "BaseElement.h"
-#include "ParseContext.h"
+#include "ParseUtil.h"
 
 namespace AdaptiveSharedNamespace
 {
@@ -90,7 +90,7 @@ namespace AdaptiveSharedNamespace
                 const auto countNames = memberNames.size();
                 for (unsigned int i = 0; i < countNames; ++i)
                 {
-                    const auto& memberName = memberNames[i];
+                    const auto& memberName = memberNames.at(i);
                     const auto& memberValue = requiresValue[memberName].asString();
                     try
                     {

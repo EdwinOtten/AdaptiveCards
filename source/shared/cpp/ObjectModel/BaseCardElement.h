@@ -6,8 +6,6 @@
 #include "BaseActionElement.h"
 #include "BaseElement.h"
 #include "ElementParserRegistration.h"
-#include "ParseUtil.h"
-#include "ParseContext.h"
 #include "Separator.h"
 #include "RemoteResourceInformation.h"
 
@@ -44,7 +42,7 @@ namespace AdaptiveSharedNamespace
 
         template<typename T> static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
 
-        static void ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
+        static void ParseJsonObject(AdaptiveSharedNamespace::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element);
 
     protected:
         static Json::Value SerializeSelectAction(const std::shared_ptr<BaseActionElement> selectAction);

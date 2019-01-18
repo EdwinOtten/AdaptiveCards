@@ -7,7 +7,7 @@ namespace AdaptiveSharedNamespace
     class AdaptiveCard;
     class AdaptiveCardParseWarning;
 
-    class ParseResult final
+    class ParseResult
     {
     public:
         ParseResult(std::shared_ptr<AdaptiveCard> adaptiveCard, std::vector<std::shared_ptr<AdaptiveCardParseWarning>> warnings);
