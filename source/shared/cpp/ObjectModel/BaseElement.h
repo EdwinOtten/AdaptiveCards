@@ -9,8 +9,6 @@
 
 namespace AdaptiveSharedNamespace
 {
-    class ParseContext;
-
     class BaseElement
     {
     public:
@@ -19,6 +17,12 @@ namespace AdaptiveSharedNamespace
             m_fallbackContent(nullptr), m_fallbackType(FallbackType::None)
         {
         }
+
+        BaseElement(const BaseElement&) = default;
+        BaseElement(BaseElement&&) = default;
+        BaseElement& operator=(const BaseElement&) = default;
+        BaseElement& operator=(BaseElement&&) = default;
+        virtual ~BaseElement() = default;
 
         // Element type and identity
         std::string GetElementTypeString() const;
@@ -30,14 +34,16 @@ namespace AdaptiveSharedNamespace
 
         // Element parsing/serialization
         template<typename T>
-        static void ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
+        static void ParseJsonObject(AdaptiveSharedNamespace::ParseContext& context,
+                                    const Json::Value& json,
+                                    std::shared_ptr<BaseElement>& baseElement)
         {
             T::ParseJsonObject(context, json, baseElement);
         }
 
         template<typename T> void DeserializeBase(ParseContext& context, const Json::Value& json);
 
-        template<typename T> static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json) = 0;
+        template<typename T> static std::shared_ptr<T> Deserialize(ParseContext& context, const Json::Value& json);
         virtual std::string Serialize() const;
         virtual Json::Value SerializeToJsonValue() const;
         Json::Value GetAdditionalProperties() const;

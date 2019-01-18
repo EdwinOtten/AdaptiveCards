@@ -25,7 +25,7 @@ namespace AdaptiveSharedNamespace
         virtual std::shared_ptr<BaseCardElement> DeserializeFromString(ParseContext& context, const std::string& value) = 0;
     };
 
-    class ElementParserRegistration final
+    class ElementParserRegistration
     {
     public:
         ElementParserRegistration();

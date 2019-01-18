@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "BaseCardElement.h"
-#include "BaseElement.h"
+#include "AdaptiveCardParseException.h"
+#include "ParseUtil.h"
 #include "ElementParserRegistration.h"
 #include "ShowCardAction.h"
 #include "OpenUrlAction.h"
-#include "ParseContext.h"
-#include "ParseUtil.h"
 #include "SubmitAction.h"
 
 using namespace AdaptiveSharedNamespace;
@@ -122,7 +121,7 @@ Json::Value BaseCardElement::SerializeSelectAction(const std::shared_ptr<BaseAct
     return Json::Value();
 }
 
-void BaseCardElement::ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element)
+void BaseCardElement::ParseJsonObject(AdaptiveSharedNamespace::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& element)
 {
     const std::string typeString = ParseUtil::GetTypeAsString(json);
     std::shared_ptr<BaseCardElementParser> parser = context.elementParserRegistration->GetParser(typeString);

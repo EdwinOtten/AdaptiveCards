@@ -12,7 +12,6 @@ BaseActionElement::BaseActionElement(ActionType type) :
     PopulateKnownPropertiesSet();
 }
 
-
 std::string BaseActionElement::GetTitle() const
 {
     return m_title;
@@ -96,7 +95,7 @@ void BaseActionElement::GetResourceInformation(std::vector<RemoteResourceInforma
     }
 }
 
-void BaseActionElement::ParseJsonObject(ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
+void BaseActionElement::ParseJsonObject(AdaptiveSharedNamespace::ParseContext& context, const Json::Value& json, std::shared_ptr<BaseElement>& baseElement)
 {
     baseElement = ParseUtil::GetActionFromJsonValue(context, json);
 }

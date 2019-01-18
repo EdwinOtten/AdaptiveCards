@@ -22,7 +22,7 @@ namespace AdaptiveSharedNamespace
         virtual std::shared_ptr<BaseActionElement> Deserialize(ParseContext& context, const Json::Value& value) = 0;
     };
 
-    class ActionParserRegistration final
+    class ActionParserRegistration
     {
     public:
         ActionParserRegistration();

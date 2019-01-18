@@ -1,7 +1,6 @@
 #pragma once
 
 #include "pch.h"
-#include "BaseElement.h"
 #include "ElementParserRegistration.h"
 #include "ActionParserRegistration.h"
 #include "AdaptiveCardParseWarning.h"

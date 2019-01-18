@@ -7,6 +7,7 @@
 #include "SharedAdaptiveCard.h"
 #include "BaseCardElement.h"
 #include "ActionParserRegistration.h"
+#include "AdaptiveCardParseException.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace AdaptiveCards;
