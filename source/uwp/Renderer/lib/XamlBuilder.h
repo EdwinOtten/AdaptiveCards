@@ -136,6 +136,9 @@ namespace AdaptiveNamespace
                                    _In_ ABI::AdaptiveNamespace::IAdaptiveRenderContext* renderContext,
                                    _In_ ABI::AdaptiveNamespace::IAdaptiveRenderArgs* renderArgs);
 
+        static void HandleFallbackAndRequires(ABI::AdaptiveNamespace::IAdaptiveCardElement* elementToInspect,
+                                              ABI::AdaptiveNamespace::IAdaptiveCardElement** elementToUse);
+
         template<typename T>
         void SetImageSource(_In_ T* destination,
                             _In_ ABI::Windows::UI::Xaml::Media::IImageSource* imageSource,
