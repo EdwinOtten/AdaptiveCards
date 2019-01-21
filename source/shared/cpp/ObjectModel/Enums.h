@@ -13,7 +13,6 @@ namespace AdaptiveSharedNamespace
         Actions,
         ActionSet,
         ActionSetConfig,
-        Actions,
         ActionsOrientation,
         AdaptiveCard,
         AllowCustomStyle,

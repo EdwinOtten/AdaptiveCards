@@ -46,7 +46,7 @@ std::shared_ptr<BaseCardElement> ActionSetParser::Deserialize(ParseContext& cont
 {
     ParseUtil::ExpectTypeString(value, CardElementType::ActionSet);
 
-    auto actionSet = BaseCardElement::Deserialize<ActionSet>(value);
+    auto actionSet = BaseCardElement::Deserialize<ActionSet>(context, value);
 
     // Parse Actions
     auto actionElements = ParseUtil::GetActionCollection(context, value, AdaptiveCardSchemaKey::Actions, false);

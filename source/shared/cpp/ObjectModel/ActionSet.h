@@ -16,6 +16,12 @@ namespace AdaptiveCards
         ActionSet();
         ActionSet(std::vector<std::shared_ptr<BaseActionElement>>& actions);
 
+        ActionSet(const ActionSet&) = default;
+        ActionSet(ActionSet&&) = default;
+        ActionSet& operator=(const ActionSet&) = default;
+        ActionSet& operator=(ActionSet&&) = default;
+        ~ActionSet() = default;
+
         virtual Json::Value SerializeToJsonValue() const override;
 
         std::vector<std::shared_ptr<BaseActionElement>>& GetActions();
