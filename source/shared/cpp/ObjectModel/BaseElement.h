@@ -73,7 +73,7 @@ namespace AdaptiveSharedNamespace
         }
 
         template<typename T> void ParseFallback(ParseContext& context, const Json::Value& json);
-        void ParseRequires(ParseContext& /*context*/, const Json::Value& json);
+        void ParseRequires(ParseContext& context, const Json::Value& json);
 
         std::unordered_map<std::string, SemanticVersion> m_requires;
         std::shared_ptr<BaseElement> m_fallbackContent;
