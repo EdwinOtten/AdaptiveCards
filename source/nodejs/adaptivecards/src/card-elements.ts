@@ -2311,6 +2311,10 @@ export class TextInput extends Input {
 				this._inputElement.setAttribute("aria-label", this.placeholder)
 			}
 
+			if (!Utils.isNullOrEmpty(this.autoComplete)) {
+				this._inputElement.autoComplete = this.autoComplete;
+			}
+
 			if (!Utils.isNullOrEmpty(this.defaultValue)) {
 				this._inputElement.value = this.defaultValue;
 			}
@@ -2328,6 +2332,7 @@ export class TextInput extends Input {
 	maxLength: number;
 	isMultiline: boolean = false;
 	placeholder: string;
+	autoComplete: string;
 	style: Enums.InputTextStyle = Enums.InputTextStyle.Text;
 
 	getJsonTypeName(): string {
@@ -2338,6 +2343,7 @@ export class TextInput extends Input {
 		let result = super.toJSON();
 
 		Utils.setProperty(result, "placeholder", this.placeholder);
+		Utils.setProperty(result, "autoComplete", this.autoComplete);
 		Utils.setProperty(result, "maxLength", this.maxLength, 0);
 		Utils.setProperty(result, "isMultiline", this.isMultiline, false);
 		Utils.setEnumProperty(Enums.InputTextStyle, result, "style", this.style, Enums.InputTextStyle.Text);
@@ -2351,6 +2357,7 @@ export class TextInput extends Input {
 		this.maxLength = json["maxLength"];
 		this.isMultiline = Utils.parseBoolProperty(json["isMultiline"], this.isMultiline);
 		this.placeholder = json["placeholder"];
+		this.autoComplete = json["autoComplete"];
 		this.style = Utils.getEnumValueOrDefault(Enums.InputTextStyle, json["style"], this.style);
 	}
 
